@@ -27,7 +27,7 @@
   <!-- TODO: Replace with your actual website URL -->
   <meta property="og:url" content="https://duterscmy.github.io/soar-introduction">
   <!-- TODO: Create a 1200x630px preview image and update path -->
-  <meta property="og:image" content="https://duterscmy.github.io/soar-introduction/static/images/method.gif">
+ <meta property="og:image" content="https://duterscmy.github.io/soar-introduction/static/images/soar_icon.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
@@ -64,8 +64,8 @@
   <title>PAPER_TITLE - AUTHOR_NAMES | Academic Research</title>
   
   <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="icon" type="image/png" href="static/images/soar_icon.png">
+  <link rel="apple-touch-icon" href="static/images/soar_icon.png">
   
   <!-- Critical CSS - Load synchronously -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
@@ -180,7 +180,10 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <!-- TODO: Replace with your paper title -->
-            <h1 class="title is-1 publication-title">SOAR: Confidence-Switched Position Beam Search for Diffusion Language Models</h1>
+            <h1 class="title is-1 publication-title">
+  <img src="static/images/soar_icon.png" alt="SOAR Icon" style="height: 2em; width: auto; vertical-align: middle; margin-right: 0.2rem;">
+  SOAR: Confidence-Switched Position Beam Search for Diffusion Language Models
+</h1>
             <div class="is-size-5 publication-authors">
               <!-- TODO: Replace with your paper authors and their personal links -->
               <span class="author-block">
@@ -251,7 +254,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3">Overview</h2>
         <div class="content has-text-justified">
           <!-- TODO: Replace with your paper abstract -->
           <p>
@@ -269,6 +272,27 @@
 <!-- End paper abstract -->
 
 
+<!-- Motivation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Motivation</h2>
+        <div class="content">
+          <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+            <img src="static/images/accuracy_vs_average_confidence_4bins.png" alt="Accuracy vs Average Confidence" style="max-width: 80%; height: auto;">
+          </div>
+          <p style="margin-top: 1rem; font-size: 1rem;">
+            We computed the average confidence of all samples during decoding on DREAM-7B and divided the samples into 6 groups, revealing a positive correlation between confidence and accuracy (p = 0.000). 
+            This leads us to ask: <strong>Can we obtain sequences with higher decoding confidence—and thus better decoding results—by expanding the search space?</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Motivation -->
+
 <!-- Method Illustration -->
 <section class="section">
   <div class="container is-max-widescreen">
@@ -279,15 +303,21 @@
           <figure class="image" style="max-width: 100%; margin: 0 auto;">
             <img src="static/images/method.gif" alt="SOAR Method Illustration" style="width: 100%; height: auto; max-height: 600px; object-fit: contain;">
           </figure>
+          
+          <div style="margin-top: 2rem; text-align: left; color: #000000; font-size: 1rem;">
+            <p style="margin-bottom: 1rem;">
+              (1) We propose Position Beam Search (PBS), which <strong>performs search in the position dimension</strong> to obtain sequences with higher confidence. We find that while PBS improves generation quality, it slows down inference speed.
+            </p>
+            <p>
+              (2) We further propose SOAR (illustrated above), which performs search <strong>only when the model cannot generate high-confidence tokens</strong>, and directly employs parallel decoding to accelerate inference when the model is sufficiently confident.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 <!-- End Method Illustration -->
-
-
-
 
 <!-- Main Results -->
 <section class="section hero is-light">
@@ -296,26 +326,93 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3 has-text-centered">Main Results</h2>
         <div class="content">
-          <figure class="image has-text-centered">
-            <img src="static/images/decoding_strategy_impact.png" alt="Decoding Strategy Impact">
-          </figure>
+          <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+            <img src="static/images/decoding_strategy_impact.png" alt="Decoding Strategy Impact" style="max-width: 80%; height: auto;">
+          </div>
           
-          <ul style="margin-top: 1.5rem; margin-bottom: 1rem; padding-left: 1.2rem;">
+          <ul style="margin-top: 1rem; margin-bottom: 1rem; padding-left: 1.2rem; font-size: 1rem;">
             <li style="margin-bottom: 0.5rem;"><span style="color: #3366cc;">PBS (single token)</span> achieves quality improvement but slows down decoding by 50%.</li>
             <li style="margin-bottom: 0.5rem;">When combining PBS with parallel decoding (decoding two tokens per step, corresponding to <span style="color: #3366cc;">PBS (parallel)</span> in the figure), the quality gains from PBS are offset by the quality degradation caused by parallel decoding.</li>
             <li style="margin-bottom: 0.5rem;">In contrast, <span style="color: #2e8b57;">SOAR (Ours)</span> dynamically switches between the two modes based on confidence, achieving improved decoding quality without sacrificing decoding speed.</li>
           </ul>
-          
-          <p style="color: #777777; font-size: 0.9rem; margin-top: 0.5rem; padding-left: 1.2rem;">
-            <strong>PBS:</strong> Position Beam Search<br>
-            <strong>SOAR:</strong> Confidence-Switched Position Beam Search
-          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
 <!-- End Main Results -->
+
+<!-- Detail Results -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Detail Results</h2>
+        <div class="content">
+          <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+            <img src="static/images/detail_results.png" alt="Detailed Results on LLaDA-8B-Base and Dream-7B-Base" style="max-width: 90%; height: auto;">
+          </div>
+          
+          <div style="margin-top: 1rem; color: #000000; font-size: 1rem;">
+            <p style="margin-bottom: 0.8rem; text-align: center;">
+              <strong>Upper:</strong> Results on LLaDA-8B-Base; <strong>Lower:</strong> Results on Dream-7B-Base
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Detail Results -->
+
+<!-- Further Analysis -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Further Analysis</h2>
+        <div class="content">
+          <figure class="image has-text-centered">
+            <img src="static/images/confidence_arness_vs_accuracy.png" alt="Confidence and AR-ness vs Accuracy" style="width: 100%; height: auto;">
+          </figure>
+          
+          <div style="margin-top: 1.5rem; color: #000000; font-size: 1rem;">
+            <ul style="margin-bottom: 1rem; padding-left: 1.2rem;">
+              <li style="margin-bottom: 0.8rem;">We again plot the confidence and accuracy of different methods (left figure). It can be seen that SOAR improves accuracy by searching for sequences with higher average confidence.</li>
+              <li style="margin-bottom: 0.8rem;">Interestingly, we also plot the relationship between AR-ness and accuracy (right figure) and find that negative AR-ness also correlates with accuracy. This suggests that SOAR, by expanding the search space, prevents the model from always decoding tokens closer to the prompt, making the generation process more flexible.</li>
+            </ul>
+            
+            <p style="color: #777777; font-style: italic; font-size: 0.9rem; margin-top: 0.5rem; padding-left: 1.2rem;">
+              AR-ness: proposed by <a href="https://arxiv.org/pdf/2506.20639" target="_blank" style="color: #777777; text-decoration: underline;">DiffuCoder</a>, measures whether the generation process follows a left-to-right order; the larger the value, the closer it is to autoregressive generation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Further Analysis -->
+
+<!-- Decoding Path Visualization -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Decoding Path Visualization</h2>
+        <div class="content">
+          <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+            <img src="static/images/decoding_paths_comparison.png" alt="Decoding Paths Comparison" style="max-width: 80%; height: auto;">
+          </div>
+          
+          <p style="margin-top: 1rem; color: #000000; text-align: center; font-size: 1rem;">
+            Left: Greedy Decoding, Right: SOAR (using the same GSM8K sample). SOAR explores a more confident and flexible decoding path under less decoding steps.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Decoding Path Visualization -->
 
 
 <!--BibTex citation -->
